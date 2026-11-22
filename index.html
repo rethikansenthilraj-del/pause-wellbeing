@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pause - Student Well-being</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- ================= HOME SCREEN ================= -->
+    <div id="home" class="screen active">
+      <h3 id="greeting">Hello</h3>
+      <h1>How are you feeling?</h1>
+      <p class="muted">No right or wrong answer. Just a quick check-in.</p>
+
+      <!-- mood buttons -->
+      <div class="card">
+        <div class="moods">
+          <button class="mood" data-score="5"><span>😄</span>Great</button>
+          <button class="mood" data-score="4"><span>🙂</span>Good</button>
+          <button class="mood" data-score="3"><span>😐</span>Okay</button>
+          <button class="mood" data-score="2"><span>😔</span>Low</button>
+          <button class="mood" data-score="1"><span>😣</span>Heavy</button>
+        </div>
+        <p class="message" id="moodMessage"></p>
+      </div>
+
+      <!-- stress slider -->
+      <div class="card">
+        <div class="row">
+          <h2>Stress level</h2>
+          <span class="tag" id="stressLabel">Moderate</span>
+        </div>
+        <input type="range" id="stressSlider" min="1" max="10" value="5">
+        <div class="row small muted">
+          <span>Calm</span>
+          <span>Very stressed</span>
+        </div>
+        <p class="tip" id="stressTip"></p>
+      </div>
+
+      <!-- weekly chart -->
+      <div class="card">
+        <h2>Your week</h2>
+        <div class="chart" id="chart"></div>
+        <p class="small muted">Saved only on this device. Nobody else can see it.</p>
+      </div>
+    </div>
+
+    <!-- ================= RELAX SCREEN ================= -->
+    <div id="relax" class="screen">
+      <h1>Take a moment</h1>
+      <p class="muted">Pick one. Each takes about a minute.</p>
+
+      <!-- breathing -->
+      <div class="card center">
+        <h2>Breathe</h2>
+        <div class="orb-box">
+          <div class="orb" id="orb"><span id="orbText">Ready</span></div>
+        </div>
+        <button class="btn" id="breatheBtn">Start 1 minute</button>
+      </div>
+
+      <!-- grounding -->
+      <div class="card">
+        <h2>Ground yourself (5-4-3-2-1)</h2>
+        <p class="muted" id="groundText">Tap start and look around you.</p>
+        <div class="dots" id="groundDots">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </div>
+        <button class="btn outline" id="groundBtn">Start</button>
+      </div>
+
+      <!-- timer -->
+      <div class="card">
+        <h2>Study break timer</h2>
+        <div class="timer" id="timerText">25:00</div>
+        <div class="switch">
+          <button class="on" id="focusBtn">Focus 25</button>
+          <button id="breakBtn">Break 5</button>
+        </div>
+        <button class="btn full" id="timerBtn">Start</button>
+      </div>
+    </div>
+
+    <!-- ================= WRITE SCREEN ================= -->
+    <div id="write" class="screen">
+      <h1>Brain dump</h1>
+      <p class="muted">Get it out of your head. Nothing is saved unless you choose.</p>
+
+      <div class="card">
+        <div class="chips">
+          <button class="chip">What's on my mind?</button>
+          <button class="chip">What's due soon?</button>
+          <button class="chip">One thing that went okay</button>
+        </div>
+
+        <textarea id="dumpBox" rows="8" placeholder="Type anything..."></textarea>
+
+        <div class="row">
+          <button class="btn outline" id="clearBtn">Let it go</button>
+          <button class="btn" id="saveBtn">Keep on device</button>
+        </div>
+        <p class="message" id="dumpMessage"></p>
+      </div>
+
+      <div class="card">
+        <h2>Tiny next step</h2>
+        <p class="muted">Pick one small thing for the next 10 minutes.</p>
+        <ul class="steps" id="stepList"></ul>
+      </div>
+    </div>
+
+    <!-- ================= TALK SCREEN ================= -->
+    <div id="support" class="screen">
+      <h1>Talk to someone</h1>
+      <p class="muted">It's not only for emergencies. Talking early is normal.</p>
+
+      <div class="card">
+        <h2>Anonymous check-in chat</h2>
+        <p class="muted">A friendly peer listener. No name, no record, no judgment.</p>
+        <button class="btn full" id="chatBtn">Chat now</button>
+      </div>
+
+      <div class="card">
+        <h2>Book a wellness chat</h2>
+        <p class="muted">15 minutes. Just pick a time.</p>
+        <div class="slots" id="slotBox"></div>
+        <p class="message" id="bookMessage"></p>
+      </div>
+
+      <div class="card green">
+        <h2>If things feel very heavy</h2>
+        <p class="muted">Free, private and open 24/7 in India:</p>
+        <a class="btn outline" href="tel:14416">Call Tele-MANAS 14416</a>
+      </div>
+    </div>
+
+    <!-- ================= BOTTOM MENU ================= -->
+    <div class="nav">
+      <button class="on" data-page="home"><i>🏠</i>Home</button>
+      <button data-page="relax"><i>🌿</i>Relax</button>
+      <button data-page="write"><i>✍️</i>Write</button>
+      <button data-page="support"><i>💬</i>Talk</button>
+    </div>
+
+  </div>
+
+  <!-- chat popup -->
+  <div class="popup" id="popup" hidden>
+    <div class="popup-box">
+      <div class="row">
+        <h2>Anonymous chat</h2>
+        <button class="close" id="closeBtn">✕</button>
+      </div>
+      <div class="msgs" id="msgs"></div>
+      <form id="chatForm" class="row">
+        <input id="chatInput" placeholder="Say anything..." autocomplete="off">
+        <button class="btn">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
