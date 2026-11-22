@@ -368,3 +368,39 @@ textarea:focus, #chatInput:focus { border-color: var(--green); }
 }
 .msg.them { background: var(--bg); align-self: flex-start; }
 .msg.me   { background: var(--dark-green); color: white; align-self: flex-end; }
+/* ---------- chat: keep line breaks and make it taller ---------- */
+.msg { white-space: pre-line; }
+.msgs { height: 50vh; max-height: 420px; }
+
+/* ---------- timetable card inside chat ---------- */
+.msg.plan { max-width: 100%; width: 100%; white-space: normal; }
+.plan h4 { margin-bottom: 8px; font-size: 0.95rem; }
+.plan-day {
+  font-weight: bold;
+  margin: 12px 0 6px;
+  color: var(--dark-green);
+  font-size: 0.85rem;
+}
+.plan-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+}
+.plan-row.study { background: #eef4f0; }
+.plan-row.break { background: var(--peach); color: #7a5236; }
+
+/* ---------- flowchart boxes ---------- */
+.flow-box {
+  text-align: center;
+  padding: 8px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+}
+.flow-box.study { background: #eef4f0; border: 2px solid var(--green); }
+.flow-box.break { background: var(--peach); color: #7a5236; }
+.flow-box.end { background: var(--dark-green); color: white; }
+.flow-arrow { text-align: center; color: var(--grey); margin: 2px 0; }
