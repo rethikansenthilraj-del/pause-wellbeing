@@ -430,20 +430,119 @@ for (let i = 0; i < times.length; i++) {
 
   slotBox.appendChild(slot);
 }
+// ---------- anonymous chat (smart replies for the prototype) ----------
 
-
-// ---------- anonymous chat (pretend replies for the prototype) ----------
-let replies = [
-  "Hi, I'm glad you reached out. What's on your mind?",
-  "That sounds really tough. Thanks for telling me.",
-  "You're not behind and you're not alone. Many students feel this.",
-  "What's one small thing that might make today a bit easier?"
+// each topic has keywords to look for, and a few replies to pick from
+let topics = [
+  {
+    words: ["exam", "test", "marks", "grade", "fail", "result", "study", "assignment", "deadline", "backlog"],
+    replies: [
+      "Academic pressure is really heavy. You're doing more than you think. What feels like the biggest thing right now?",
+      "That sounds stressful. Want to pick just one small task for the next 10 minutes?",
+      "Marks don't measure your worth. What would make today feel a little lighter?"
+    ]
+  },
+  {
+    words: ["sleep", "tired", "exhausted", "insomnia", "awake", "energy"],
+    replies: [
+      "Being this tired makes everything feel harder. How many hours have you been getting lately?",
+      "Rest matters more than one extra study hour. Could you try switching off screens 30 minutes earlier tonight?"
+    ]
+  },
+  {
+    words: ["lonely", "alone", "no friends", "isolated", "left out", "nobody"],
+    replies: [
+      "Feeling alone is really hard, and a lot of students feel this quietly. I'm glad you said it here.",
+      "You're not invisible. Is there one person you could send a small message to today?"
+    ]
+  },
+  {
+    words: ["anxious", "anxiety", "panic", "nervous", "scared", "worried", "overthinking", "fear"],
+    replies: [
+      "That sounds really uncomfortable. Want to try the breathing exercise in the Relax tab for one minute?",
+      "Your mind is working overtime. Try naming 5 things you can see right now. It helps calm things down."
+    ]
+  },
+  {
+    words: ["parents", "family", "mother", "father", "expectations", "pressure", "compare"],
+    replies: [
+      "Carrying other people's expectations is tiring. What do YOU want for yourself in this?",
+      "It's okay to love your family and still feel stressed by expectations. Do you want to talk about it more?"
+    ]
+  },
+  {
+    words: ["sad", "cry", "crying", "down", "low", "hopeless", "empty", "numb"],
+    replies: [
+      "I'm sorry you're feeling this way. Your feelings are valid. When did it start feeling this heavy?",
+      "Thanks for trusting me with that. You don't have to fix anything right now. I'm here."
+    ]
+  },
+  {
+    words: ["angry", "frustrated", "annoyed", "irritated", "fed up"],
+    replies: [
+      "That frustration makes sense. Want to dump it all in the Brain dump tab? Nobody will see it.",
+      "It's okay to feel angry. What's been building up?"
+    ]
+  },
+  {
+    words: ["thank", "thanks", "helped", "better", "good talk"],
+    replies: [
+      "I'm really glad. You took a good step by reaching out today.",
+      "Anytime. Come back whenever you need a pause."
+    ]
+  }
 ];
-let replyNumber = 0;
+
+// words that mean the person may be in serious distress
+let crisisWords = ["suicide", "kill myself", "end my life", "want to die", "wanna die", "hurt myself", "self harm", "end it all", "no reason to live"];
+
+// used when no keyword matches
+let defaultReplies = [
+  "I hear you. Tell me a bit more about that.",
+  "That sounds like a lot. What's the hardest part of it?",
+  "Thanks for sharing. How long have you been feeling this way?",
+  "I'm listening. Take your time."
+];
 
 let popup = document.getElementById("popup");
 let msgs = document.getElementById("msgs");
 let chatInput = document.getElementById("chatInput");
+
+// pick a random item from a list
+function pickOne(list) {
+  let index = Math.floor(Math.random() * list.length);
+  return list[index];
+}
+
+// decide what to reply based on what the user typed
+function getReply(userText) {
+  let text = userText.toLowerCase();
+
+  // 1. check for serious distress first
+  for (let i = 0; i < crisisWords.length; i++) {
+    if (text.includes(crisisWords[i])) {
+      return "I'm really glad you told me, and I'm concerned about you. You don't have to go through this alone. Please call Tele-MANAS on 14416 (free, 24/7), or tell someone near you right now.";
+    }
+  }
+
+  // 2. greetings
+  let firstWord = text.split(" ")[0];
+  if (firstWord == "hi" || firstWord == "hello" || firstWord == "hey") {
+    return "Hi, I'm glad you're here. How has your day been?";
+  }
+
+  // 3. look through each topic for a matching keyword
+  for (let i = 0; i < topics.length; i++) {
+    for (let j = 0; j < topics[i].words.length; j++) {
+      if (text.includes(topics[i].words[j])) {
+        return pickOne(topics[i].replies);
+      }
+    }
+  }
+
+  // 4. nothing matched
+  return pickOne(defaultReplies);
+}
 
 function addMessage(text, who) {
   let div = document.createElement("div");
@@ -459,8 +558,7 @@ document.getElementById("chatBtn").addEventListener("click", function () {
   // first greeting only once
   if (msgs.children.length == 0) {
     setTimeout(function () {
-      addMessage(replies[0], "them");
-      replyNumber = 1;
+      addMessage("Hi, I'm glad you reached out. What's on your mind?", "them");
     }, 500);
   }
 });
@@ -480,9 +578,11 @@ document.getElementById("chatForm").addEventListener("submit", function (e) {
   addMessage(text, "me");
   chatInput.value = "";
 
-  // reply after a short delay so it feels real
+  let reply = getReply(text);
+
+  // small delay so it feels like someone is typing
   setTimeout(function () {
-    addMessage(replies[replyNumber % replies.length], "them");
-    replyNumber = replyNumber + 1;
+    addMessage(reply, "them");
   }, 900);
 });
+
