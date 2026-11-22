@@ -1,0 +1,370 @@
+/* ---------- colors I'm using everywhere ---------- */
+:root {
+  --bg: #f6f3ee;
+  --white: #ffffff;
+  --text: #2b2f36;
+  --grey: #6f7782;
+  --green: #8fb5a0;
+  --dark-green: #5f8f79;
+  --purple: #cfc8ee;
+  --peach: #f6d9c6;
+  --line: #ebe6dd;
+}
+
+/* reset default spacing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* keeps the app narrow like a phone, even on laptop */
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 18px 100px;
+}
+
+h1 { font-size: 1.7rem; margin-bottom: 4px; }
+h2 { font-size: 1.05rem; margin-bottom: 6px; }
+h3 { font-size: 0.85rem; font-weight: 400; color: var(--grey); }
+
+.muted  { color: var(--grey); font-size: 0.92rem; }
+.small  { font-size: 0.8rem; }
+.center { text-align: center; }
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------- screens ---------- */
+/* only the active screen is shown */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ---------- cards ---------- */
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+.card.green { background: #eef4f0; }
+
+/* ---------- mood buttons ---------- */
+.moods {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.mood {
+  border: 2px solid transparent;
+  background: var(--bg);
+  border-radius: 16px;
+  padding: 10px 0;
+  font-size: 0.72rem;
+  color: var(--grey);
+  cursor: pointer;
+}
+.mood span {
+  display: block;
+  font-size: 1.7rem;
+}
+.mood.selected {
+  border-color: var(--green);
+  background: #eef4f0;
+  color: var(--text);
+}
+
+.message {
+  margin-top: 12px;
+  color: var(--dark-green);
+  font-size: 0.9rem;
+}
+
+/* ---------- stress ---------- */
+.tag {
+  background: var(--purple);
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: bold;
+}
+input[type="range"] {
+  width: 100%;
+  margin: 16px 0 6px;
+  accent-color: var(--dark-green);
+}
+.tip {
+  margin-top: 12px;
+  font-size: 0.9rem;
+  background: var(--bg);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+/* ---------- weekly chart ---------- */
+.chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 110px;
+  margin: 12px 0;
+}
+.bar-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.bar {
+  width: 24px;
+  border-radius: 8px;
+  background: var(--line);
+}
+.bar.filled { background: var(--dark-green); }
+.bar-box small { font-size: 0.68rem; color: var(--grey); }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block;
+  border: none;
+  background: var(--dark-green);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+.btn:hover { opacity: 0.9; }
+.btn.outline {
+  background: transparent;
+  color: var(--dark-green);
+  border: 2px solid var(--green);
+}
+.btn.full {
+  width: 100%;
+  margin-top: 14px;
+}
+
+/* ---------- breathing circle ---------- */
+.orb-box {
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orb {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--green);
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 4s ease-in-out;   /* smooth grow and shrink */
+}
+.orb.in  { transform: scale(1.7); }
+.orb.out { transform: scale(1); }
+
+/* ---------- grounding dots ---------- */
+.dots { display: flex; gap: 8px; margin: 12px 0; }
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.dot.on { background: var(--dark-green); }
+
+/* ---------- timer ---------- */
+.timer {
+  font-size: 2.6rem;
+  font-weight: 300;
+  text-align: center;
+  margin: 8px 0 12px;
+}
+.switch {
+  display: flex;
+  background: var(--bg);
+  border-radius: 30px;
+  padding: 4px;
+}
+.switch button {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 8px;
+  border-radius: 30px;
+  color: var(--grey);
+  cursor: pointer;
+}
+.switch button.on {
+  background: white;
+  color: var(--text);
+  font-weight: bold;
+}
+
+/* ---------- write screen ---------- */
+textarea, #chatInput {
+  width: 100%;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  padding: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: var(--bg);
+  outline: none;
+  resize: none;
+  margin: 10px 0 14px;
+}
+textarea:focus, #chatInput:focus { border-color: var(--green); }
+#chatInput { margin: 0; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border: none;
+  background: var(--peach);
+  color: #7a5236;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.steps { list-style: none; margin-top: 10px; }
+.steps li {
+  padding: 10px 0 10px 30px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.92rem;
+  cursor: pointer;
+  position: relative;
+}
+.steps li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+}
+.steps li.done {
+  color: var(--grey);
+  text-decoration: line-through;
+}
+.steps li.done::before { background: var(--dark-green); }
+
+/* ---------- booking slots ---------- */
+.slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+.slot {
+  border: 2px solid var(--line);
+  background: white;
+  border-radius: 12px;
+  padding: 10px 4px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.slot.selected {
+  background: var(--dark-green);
+  border-color: var(--dark-green);
+  color: white;
+}
+
+/* ---------- bottom menu ---------- */
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  background: white;
+  border-top: 1px solid var(--line);
+  padding: 8px 8px 12px;
+}
+.nav button {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 0.72rem;
+  color: var(--grey);
+  cursor: pointer;
+}
+.nav button i {
+  display: block;
+  font-style: normal;
+  font-size: 1.3rem;
+  opacity: 0.5;
+}
+.nav button.on { color: var(--dark-green); font-weight: bold; }
+.nav button.on i { opacity: 1; }
+
+/* ---------- chat popup ---------- */
+.popup {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 10;
+}
+.popup[hidden] { display: none; }
+.popup-box {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 24px 24px 0 0;
+  padding: 20px;
+}
+.close {
+  border: none;
+  background: var(--bg);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.msgs {
+  height: 260px;
+  overflow-y: auto;
+  margin: 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.msg {
+  max-width: 80%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+}
+.msg.them { background: var(--bg); align-self: flex-start; }
+.msg.me   { background: var(--dark-green); color: white; align-self: flex-end; }
